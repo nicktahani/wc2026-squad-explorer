@@ -1,0 +1,1 @@
+Explore every squad at the 2026 World Cup. Quickly see how teams stack up, identify star players, and get an at-a-glance sense of team quality.
