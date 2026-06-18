@@ -1,11 +1,10 @@
 import './App.css'
+import { Routes, Route } from 'react-router-dom'
 import { useWorldCupData } from './data/useWorldCupData'
 import GroupStage from './components/GroupStage'
 
 export default function App() {
   const { data, loading, error, reload } = useWorldCupData()
-
-  console.log('data', data)
 
   return (
     <div className="app">
@@ -36,11 +35,19 @@ export default function App() {
         )}
 
         {data && (
-          <GroupStage
-            groups={data.groups}
-            matches={data.matches}
-            teamsByName={data.teamsByName}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <GroupStage
+                  groups={data.groups}
+                  matches={data.matches}
+                  teamsByName={data.teamsByName}
+                />
+              }
+            />
+            <Route path="/match/:id" element={null} />
+          </Routes>
         )}
       </main>
 
