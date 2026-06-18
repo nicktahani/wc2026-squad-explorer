@@ -1,5 +1,6 @@
 import './App.css'
 import { useWorldCupData } from './data/useWorldCupData'
+import GroupStage from './components/GroupStage'
 
 export default function App() {
   const { data, loading, error, reload } = useWorldCupData()
@@ -32,6 +33,14 @@ export default function App() {
               Try again
             </button>
           </div>
+        )}
+
+        {data && (
+          <GroupStage
+            groups={data.groups}
+            matches={data.matches}
+            teamsByName={data.teamsByName}
+          />
         )}
       </main>
 
