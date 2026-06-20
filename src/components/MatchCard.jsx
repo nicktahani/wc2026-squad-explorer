@@ -28,9 +28,7 @@ export default function MatchCard({ match }) {
         <span className="match-card__meta-line1">
           {round && <>{round} · </>}
           {formatDate(date)}
-          {time && <>, {time}</>}
         </span>
-        {ground && <span className="match-card__ground">{ground}</span>}
       </div>
     </Link>
   )
