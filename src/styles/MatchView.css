@@ -1,0 +1,189 @@
+.match-view__back {
+  display: inline-block;
+  margin-bottom: 1.5em;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.match-view__back:hover {
+  color: var(--text);
+}
+
+.match-view__header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding-bottom: 2em;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+
+.match-view__team-block {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.match-view__team-block--right {
+  justify-content: flex-end;
+}
+
+.match-view__flag {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.match-view__team-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.match-view__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.match-view__score {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.match-view__vs {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.match-view__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.match-view__meta > * + *::before {
+  content: '·';
+  margin-right: 6px;
+}
+
+.match-view__ground {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Rosters */
+
+.match-view__rosters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.roster__heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.roster__flag {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.roster__player-count {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.roster__empty {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.roster__club {
+  margin-bottom: 14px;
+}
+
+.roster__club-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+}
+
+.roster__club-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.roster__club-count {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.roster__players {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.roster__player {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid transparent;
+}
+
+.roster__pos {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 22px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.roster__name {
+  color: var(--text);
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .match-view__header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .match-view__team-block,
+  .match-view__team-block--right {
+    justify-content: center;
+  }
+
+  .match-view__rosters {
+    grid-template-columns: 1fr;
+  }
+}

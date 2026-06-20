@@ -2,6 +2,7 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { useWorldCupData } from './data/useWorldCupData'
 import GroupStage from './components/GroupStage'
+import MatchView from './components/MatchView'
 
 export default function App() {
   const { data, loading, error, reload } = useWorldCupData()
@@ -46,7 +47,7 @@ export default function App() {
                 />
               }
             />
-            <Route path="/match/:id" element={null} />
+            <Route path="/match/:id" element={<MatchView data={data} />} />
           </Routes>
         )}
       </main>
