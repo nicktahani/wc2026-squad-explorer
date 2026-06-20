@@ -1,11 +1,6 @@
 import { Link } from 'react-router-dom'
 import '../styles/MatchCard.css'
-
-function formatDate(dateStr) {
-  if (!dateStr) return 'TBD'
-  const d = new Date(dateStr + 'T00:00:00')
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-}
+import { formatDate } from '../utils/date'
 
 export default function MatchCard({ match }) {
   const { team1, team2, team1Code, team2Code, team1Flag, team2Flag, date, time, score, status, ground, round } = match
