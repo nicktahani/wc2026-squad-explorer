@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import '../styles/MatchView.css'
 import { formatDate } from '../utils/date'
+import { useMatchLineup } from '../data/useMatchLineup'
 
 function groupByClub(players) {
   const map = new Map()
@@ -57,6 +58,8 @@ export default function MatchView({ data }) {
   const team1 = data.teamsByName.get(match.team1)
   const team2 = data.teamsByName.get(match.team2)
   const ft = match.score?.ft
+  const { lineup, loading, available } = useMatchLineup(match)
+  console.log(lineup)
 
   return (
     <div className="match-view">

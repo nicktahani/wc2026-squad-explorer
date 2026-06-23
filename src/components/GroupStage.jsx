@@ -8,7 +8,6 @@ export default function GroupStage({ groups, matches, teamsByName }) {
     matchesByGroup.get(match.group).push(match)
   }
 
-  console.log('matchesByGroup', matchesByGroup)
 
   return (
     <div className="group-stage">
