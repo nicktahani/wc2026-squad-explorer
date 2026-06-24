@@ -1,31 +1,55 @@
+import { getPlayerPositions } from '../utils/pitchLayout'
+
 // SVG coordinate constants
 const W = 400, H = 600
 const L = 30, R = 370, T = 30, B = 570
 const CX = 200, CY = 300
 
-// Penalty areas (distance from goal line inward)
+// Penalty areas
 const PA_W = 220, PA_H = 90
-const PA_X = CX - PA_W / 2  // 90
+const PA_X = CX - PA_W / 2
 
 // Goal areas
 const GA_W = 86, GA_H = 30
-const GA_X = CX - GA_W / 2  // 157
+const GA_X = CX - GA_W / 2
 
 // Goals
 const GOAL_W = 60, GOAL_D = 10
-const GOAL_X = CX - GOAL_W / 2  // 170
+const GOAL_X = CX - GOAL_W / 2
 
-// Penalty spot distance from goal line, center circle / arc radius
+// Penalty spot + arc
 const PS_D = 56
 const CR = 47
+const PA_ARC_DX = Math.round(Math.sqrt(CR ** 2 - (PA_H - PS_D) ** 2))
 
-// Penalty arc: intersection x-offset where the arc exits the penalty area
-// distance from penalty spot to far edge of penalty area = PA_H - PS_D
-const PA_ARC_DX = Math.round(Math.sqrt(CR ** 2 - (PA_H - PS_D) ** 2))  // ≈32
-
+const BOUNDS = { L, R, T, B }
 const line = { fill: 'none', stroke: 'rgba(255,255,255,0.8)', strokeWidth: 1.5 }
 
-export default function Pitch() {
+function Player({ player, cx, cy, isHome }) {
+  const surname = player.name.trim().split(' ').at(-1)
+  const bg = isHome ? '#ffffff' : '#1e293b'
+  const fg = isHome ? '#1e293b' : '#ffffff'
+  const ringStroke = isHome ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.4)'
+
+  return (
+    <g>
+      <circle cx={cx} cy={cy} r={14} fill={bg} stroke={ringStroke} strokeWidth={1.5} />
+      <text x={cx} y={cy + 4} textAnchor="middle" fontSize="10" fontWeight="700"
+        fill={fg} fontFamily="system-ui, sans-serif">
+        {player.jersey}
+      </text>
+      <text x={cx} y={cy + 25} textAnchor="middle" fontSize="9.5"
+        fill="white" stroke="rgba(0,0,0,0.65)" strokeWidth="2.5" paintOrder="stroke"
+        fontFamily="system-ui, sans-serif">
+        {surname}
+      </text>
+    </g>
+  )
+}
+
+export default function Pitch({ homeRoster, awayRoster }) {
+  const homePositions = homeRoster ? getPlayerPositions('home', homeRoster.starters, BOUNDS) : {}
+  const awayPositions = awayRoster ? getPlayerPositions('away', awayRoster.starters, BOUNDS) : {}
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
@@ -57,37 +81,37 @@ export default function Pitch() {
 
       {/* Top penalty area */}
       <rect x={PA_X} y={T} width={PA_W} height={PA_H} {...line} />
-      {/* Top goal area */}
       <rect x={GA_X} y={T} width={GA_W} height={GA_H} {...line} />
-      {/* Top goal */}
       <rect x={GOAL_X} y={T - GOAL_D} width={GOAL_W} height={GOAL_D} {...line} />
-      {/* Top penalty spot */}
       <circle cx={CX} cy={T + PS_D} r={2.5} fill="rgba(255,255,255,0.8)" />
-      {/* Top penalty arc (only portion outside penalty area) */}
-      <path
-        d={`M ${CX - PA_ARC_DX} ${T + PA_H} A ${CR} ${CR} 0 0 1 ${CX + PA_ARC_DX} ${T + PA_H}`}
-        {...line}
-      />
+      <path d={`M ${CX - PA_ARC_DX} ${T + PA_H} A ${CR} ${CR} 0 0 1 ${CX + PA_ARC_DX} ${T + PA_H}`} {...line} />
 
       {/* Bottom penalty area */}
       <rect x={PA_X} y={B - PA_H} width={PA_W} height={PA_H} {...line} />
-      {/* Bottom goal area */}
       <rect x={GA_X} y={B - GA_H} width={GA_W} height={GA_H} {...line} />
-      {/* Bottom goal */}
       <rect x={GOAL_X} y={B} width={GOAL_W} height={GOAL_D} {...line} />
-      {/* Bottom penalty spot */}
       <circle cx={CX} cy={B - PS_D} r={2.5} fill="rgba(255,255,255,0.8)" />
-      {/* Bottom penalty arc (only portion outside penalty area) */}
-      <path
-        d={`M ${CX - PA_ARC_DX} ${B - PA_H} A ${CR} ${CR} 0 0 0 ${CX + PA_ARC_DX} ${B - PA_H}`}
-        {...line}
-      />
+      <path d={`M ${CX - PA_ARC_DX} ${B - PA_H} A ${CR} ${CR} 0 0 0 ${CX + PA_ARC_DX} ${B - PA_H}`} {...line} />
 
       {/* Corner arcs */}
       <path d={`M ${L + 6} ${T} A 6 6 0 0 1 ${L} ${T + 6}`} {...line} />
       <path d={`M ${R - 6} ${T} A 6 6 0 0 0 ${R} ${T + 6}`} {...line} />
       <path d={`M ${L} ${B - 6} A 6 6 0 0 1 ${L + 6} ${B}`} {...line} />
       <path d={`M ${R} ${B - 6} A 6 6 0 0 0 ${R - 6} ${B}`} {...line} />
+
+      {/* Away players (top half) */}
+      {awayRoster?.starters.map(player => {
+        const pos = awayPositions[player.formationPlace]
+        if (!pos) return null
+        return <Player key={player.formationPlace} player={player} cx={pos.cx} cy={pos.cy} isHome={false} />
+      })}
+
+      {/* Home players (bottom half) */}
+      {homeRoster?.starters.map(player => {
+        const pos = homePositions[player.formationPlace]
+        if (!pos) return null
+        return <Player key={player.formationPlace} player={player} cx={pos.cx} cy={pos.cy} isHome={true} />
+      })}
     </svg>
   )
 }

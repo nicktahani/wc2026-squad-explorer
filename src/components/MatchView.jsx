@@ -13,6 +13,15 @@ export default function MatchView({ data }) {
   const ft = match.score?.ft
   const { lineup, loading, available } = useMatchLineup(match)
 
+  // ESPN uses its own home/away which may differ from openfootball's team1/team2 order
+  // match by abbreviation so the pitch always shows team1 at the bottom
+  const team1Roster = lineup
+    ? (lineup.home?.abbreviation === match.team1Code ? lineup.home : lineup.away)
+    : null
+  const team2Roster = lineup
+    ? (lineup.home?.abbreviation === match.team1Code ? lineup.away : lineup.home)
+    : null
+
   return (
     <div className="match-view">
       <Link to="/" className="match-view__back">← All groups</Link>
@@ -44,7 +53,7 @@ export default function MatchView({ data }) {
         </div>
       </header>
 
-      <Pitch />
+      <Pitch homeRoster={team1Roster} awayRoster={team2Roster} />
     </div>
   )
 }
