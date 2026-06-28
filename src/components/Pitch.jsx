@@ -25,10 +25,10 @@ const PA_ARC_DX = Math.round(Math.sqrt(CR ** 2 - (PA_H - PS_D) ** 2))
 const BOUNDS = { L, R, T, B }
 const line = { fill: 'none', stroke: 'rgba(255,255,255,0.8)', strokeWidth: 1.5 }
 
-function Player({ player, cx, cy, isHome }) {
+function Player({ player, cx, cy, teamColor, isHome }) {
   const surname = player.name.trim().split(' ').at(-1)
-  const bg = isHome ? '#ffffff' : '#1e293b'
-  const fg = isHome ? '#1e293b' : '#ffffff'
+  const bg = teamColor ?? (isHome ? '#ffffff' : '#000000')
+  const fg = isHome ? '#000000' : '#ffffff'
   const ringStroke = isHome ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.4)'
 
   return (
@@ -50,6 +50,7 @@ function Player({ player, cx, cy, isHome }) {
 export default function Pitch({ homeRoster, awayRoster }) {
   const homePositions = homeRoster ? getPlayerPositions('home', homeRoster.starters, BOUNDS) : {}
   const awayPositions = awayRoster ? getPlayerPositions('away', awayRoster.starters, BOUNDS) : {}
+  
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
@@ -103,14 +104,32 @@ export default function Pitch({ homeRoster, awayRoster }) {
       {awayRoster?.starters.map(player => {
         const pos = awayPositions[player.formationPlace]
         if (!pos) return null
-        return <Player key={player.formationPlace} player={player} cx={pos.cx} cy={pos.cy} isHome={false} />
+        return (
+          <Player
+            key={player.formationPlace}
+            player={player}
+            cx={pos.cx}
+            cy={pos.cy}
+            teamColor={awayRoster.color}
+            isHome={false}
+          />
+        )
       })}
 
       {/* Home players (bottom half) */}
       {homeRoster?.starters.map(player => {
         const pos = homePositions[player.formationPlace]
         if (!pos) return null
-        return <Player key={player.formationPlace} player={player} cx={pos.cx} cy={pos.cy} isHome={true} />
+        return (
+          <Player
+            key={player.formationPlace}
+            player={player}
+            cx={pos.cx}
+            cy={pos.cy}
+            teamColor={homeRoster.color}
+            isHome={true}
+          />
+        )
       })}
     </svg>
   )

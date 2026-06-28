@@ -2,6 +2,12 @@ const BASE_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worl
 
 const SCOREBOARD_DATES = '20260611-20260719'
 
+function toHexColor(value) {
+  if (!value) return null
+  const color = String(value).trim()
+  return color.startsWith('#') ? color : `#${color}`
+}
+
 // returns all events (matches) for the tournament as a flat array
 // used for ID lookup when matching openfootball matches to ESPN events
 export async function fetchEspnEvents({ signal } = {}) {
@@ -53,6 +59,7 @@ export async function fetchEspnLineup(espnEventId, { signal } = {}) {
     return {
       abbreviation: rosterEntry.team?.abbreviation ?? '',
       displayName: rosterEntry.team?.displayName ?? '',
+      color: toHexColor(rosterEntry.team?.color),
       formation: rosterEntry.formation ?? null,
       starters: players.filter(p => p.formationPlace > 0).sort((a, b) => a.formationPlace - b.formationPlace),
       subs: players.filter(p => p.formationPlace === 0),

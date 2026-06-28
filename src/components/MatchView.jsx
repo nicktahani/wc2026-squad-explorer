@@ -8,10 +8,10 @@ export default function MatchView({ data }) {
   const { id } = useParams()
 
   const match = data.matches.find(m => m.id === id)
+  const { lineup, loading, available } = useMatchLineup(match)
   if (!match) return <p className="status">Match not found.</p>
 
   const ft = match.score?.ft
-  const { lineup, loading, available } = useMatchLineup(match)
 
   // ESPN uses its own home/away which may differ from openfootball's team1/team2 order
   // match by abbreviation so the pitch always shows team1 at the bottom
