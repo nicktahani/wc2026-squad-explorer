@@ -41,19 +41,18 @@ function PlayerRow({ player, compact = false }) {
   )
 }
 
-function TeamHeader({ team, fallbackName, flag, align = 'left' }) {
-  const teamName = team.displayName || fallbackName
+function TeamHeader({ team, fallbackCode, flag }) {
+  const teamCode = team.abbreviation || fallbackCode || team.displayName
 
   return (
-    <h2 className={`lineup-team__name lineup-team__name--${align}`}>
-      {align === 'left' && flag && <span className="lineup-team__flag">{flag}</span>}
+    <h2 className="lineup-team__name">
+      {flag && <span className="lineup-team__flag">{flag}</span>}
       <span>
-        {teamName}
+        {teamCode}
         {team.formation && (
           <span className="lineup-team__formation"> ({team.formation})</span>
         )}
       </span>
-      {align === 'right' && flag && <span className="lineup-team__flag">{flag}</span>}
     </h2>
   )
 }
@@ -103,12 +102,11 @@ export default function MatchLineup({ lineup, match }) {
   return (
     <>
       <div className="match-lineups__grid match-lineups__grid--desktop">
-        <TeamHeader team={lineup.home} fallbackName={match.team1} flag={match.team1Flag} />
+        <TeamHeader team={lineup.home} fallbackCode={match.team1Code} flag={match.team1Flag} />
         <TeamHeader
           team={lineup.away}
-          fallbackName={match.team2}
+          fallbackCode={match.team2Code}
           flag={match.team2Flag}
-          align="right"
         />
 
         {POSITION_GROUPS.map(group => (
@@ -126,7 +124,7 @@ export default function MatchLineup({ lineup, match }) {
 
       <div className="match-lineups__mobile">
         <section className="lineup-team-section">
-          <TeamHeader team={lineup.home} fallbackName={match.team1} flag={match.team1Flag} />
+          <TeamHeader team={lineup.home} fallbackCode={match.team1Code} flag={match.team1Flag} />
           {POSITION_GROUPS.map(group => (
             <TeamGroup
               key={group.key}
@@ -138,7 +136,7 @@ export default function MatchLineup({ lineup, match }) {
         </section>
 
         <section className="lineup-team-section">
-          <TeamHeader team={lineup.away} fallbackName={match.team2} flag={match.team2Flag} />
+          <TeamHeader team={lineup.away} fallbackCode={match.team2Code} flag={match.team2Flag} />
           {POSITION_GROUPS.map(group => (
             <TeamGroup
               key={group.key}

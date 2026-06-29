@@ -20,12 +20,11 @@
 
 .match-view__team-block {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1em;
-}
-
-.match-view__team-block--right {
-  justify-content: flex-end;
+  justify-content: center;
+  gap: 0.5em;
+  text-align: center;
 }
 
 .match-view__flag {
@@ -36,7 +35,6 @@
 .match-view__team-name {
   font-size: 2.2rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
 }
 
 .match-view__center {
@@ -113,15 +111,11 @@
 
 .lineup-team__name {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  min-height: 40px;
+  gap: 8px;
   margin-bottom: 20px;
   font-size: 1.35rem;
-}
-
-.lineup-team__name--right {
-  justify-content: flex-end;
 }
 
 .lineup-team__flag {
@@ -293,8 +287,7 @@
     text-align: center;
   }
 
-  .match-view__team-block,
-  .match-view__team-block--right {
+  .match-view__team-block {
     justify-content: center;
   }
 
@@ -315,10 +308,6 @@
 
   .lineup-team__name {
     margin-bottom: 0;
-  }
-
-  .lineup-team__name--right {
-    justify-content: flex-start;
   }
 
   .lineup-pair {

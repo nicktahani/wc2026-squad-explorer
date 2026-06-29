@@ -21,7 +21,7 @@ export default function MatchView({ data }) {
       <header className="match-view__header">
         <div className="match-view__team-block">
           {match.team1Flag && <span className="match-view__flag">{match.team1Flag}</span>}
-          <span className="match-view__team-name">{match.team1Code ?? match.team1}</span>
+          <span className="match-view__team-name">{match.team1 ?? match.team1Code}</span>
         </div>
 
         <div className="match-view__center">
@@ -39,9 +39,9 @@ export default function MatchView({ data }) {
           {match.ground && <div className="match-view__ground">{match.ground}</div>}
         </div>
 
-        <div className="match-view__team-block match-view__team-block--right">
-          <span className="match-view__team-name">{match.team2Code ?? match.team2}</span>
+        <div className="match-view__team-block">
           {match.team2Flag && <span className="match-view__flag">{match.team2Flag}</span>}
+          <span className="match-view__team-name">{match.team2 ?? match.team2Code}</span>
         </div>
       </header>
 
