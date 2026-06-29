@@ -129,6 +129,10 @@
   line-height: 1;
 }
 
+.lineup-team__formation {
+  color: var(--text-muted);
+}
+
 .lineup-group,
 .lineup-subs {
   display: flex;

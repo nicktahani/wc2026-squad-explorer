@@ -42,10 +42,17 @@ function PlayerRow({ player, compact = false }) {
 }
 
 function TeamHeader({ team, fallbackName, flag, align = 'left' }) {
+  const teamName = team.displayName || fallbackName
+
   return (
     <h2 className={`lineup-team__name lineup-team__name--${align}`}>
       {align === 'left' && flag && <span className="lineup-team__flag">{flag}</span>}
-      <span>{team.displayName || fallbackName}</span>
+      <span>
+        {teamName}
+        {team.formation && (
+          <span className="lineup-team__formation"> ({team.formation})</span>
+        )}
+      </span>
       {align === 'right' && flag && <span className="lineup-team__flag">{flag}</span>}
     </h2>
   )
