@@ -38,13 +38,21 @@ export function useMatchLineup(match) {
     staleTime: 60 * 60 * 1000,
   })
 
-  const loading = eventsQuery.isPending || (!!espnEventId && lineupQuery.isPending)
   const error = eventsQuery.error ?? lineupQuery.error ?? null
+  const lineup = lineupQuery.data ?? null
+
+  let status = 'unavailable'
+  if (eventsQuery.isPending || (!!espnEventId && lineupQuery.isPending)) {
+    status = 'loading'
+  } else if (error) {
+    status = 'error'
+  } else if (lineup?.home && lineup?.away) {
+    status = 'ready'
+  }
 
   return {
-    lineup: lineupQuery.data ?? null,
-    loading,
+    lineup,
+    status,
     error,
-    available: !!espnEventId,
   }
 }

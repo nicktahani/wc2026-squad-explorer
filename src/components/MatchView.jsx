@@ -8,12 +8,11 @@ export default function MatchView({ data }) {
   const { id } = useParams()
 
   const match = data.matches.find(m => m.id === id)
-  const { lineup, loading, available, error } = useMatchLineup(match)
+  const { lineup, status } = useMatchLineup(match)
 
   if (!match) return <p className="status">Match not found.</p>
 
   const ft = match.score?.ft
-  const hasLineups = lineup?.home && lineup?.away
 
   return (
     <div className="match-view">
@@ -49,16 +48,12 @@ export default function MatchView({ data }) {
       <section className="match-lineups" aria-label="Starting lineups">
         <div className="match-lineups__heading">
           <h1>Starting Lineup</h1>
-          {loading && <span>Loading lineup…</span>}
-          {!loading && !available && <span>Lineup unavailable for this match.</span>}
-          {!loading && available && error && <span>Couldn't load lineup.</span>}
+          {status === 'loading' && <span>Loading lineup…</span>}
+          {status === 'unavailable' && <span>Lineup unavailable for this match.</span>}
+          {status === 'error' && <span>Couldn't load lineup.</span>}
         </div>
 
-        {!loading && lineup && !hasLineups && (
-          <p className="lineup-status">Lineup not available.</p>
-        )}
-
-        {!loading && hasLineups && (
+        {status === 'ready' && (
           <MatchLineup lineup={lineup} match={match} />
         )}
       </section>
