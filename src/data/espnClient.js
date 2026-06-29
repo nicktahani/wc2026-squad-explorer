@@ -31,7 +31,7 @@ export async function fetchEspnEvents({ signal } = {}) {
      home: { abbreviation, displayName, formation, starters, subs },
      away: { ... }
    }
-   where each player is: { name, jersey, positionAbbr, formationPlace, subbedIn, subbedOut }
+   where each player is: { name, jersey, positionAbbr, positionName, starter, formationPlace, subbedIn, subbedOut }
 */
 export async function fetchEspnLineup(espnEventId, { signal } = {}) {
   const url = `${BASE_URL}/summary?event=${espnEventId}`
@@ -41,11 +41,17 @@ export async function fetchEspnLineup(espnEventId, { signal } = {}) {
 
   const rosters = data.rosters ?? []
 
+  function isStarter(value) {
+    return value === true || value === 1 || value === 'true' || value === '1'
+  }
+
   function normalizeRoster(rosterEntry) {
     const players = (rosterEntry.roster ?? []).map(p => ({
       name: p.athlete?.displayName ?? '',
       jersey: p.jersey ?? '',
       positionAbbr: p.position?.abbreviation ?? '',
+      positionName: p.position?.displayName ?? p.position?.name ?? '',
+      starter: isStarter(p.starter),
       formationPlace: p.formationPlace ? Number(p.formationPlace) : 0,
       subbedIn: p.subbedIn ?? false,
       subbedOut: p.subbedOut ?? false,
@@ -54,8 +60,10 @@ export async function fetchEspnLineup(espnEventId, { signal } = {}) {
       abbreviation: rosterEntry.team?.abbreviation ?? '',
       displayName: rosterEntry.team?.displayName ?? '',
       formation: rosterEntry.formation ?? null,
-      starters: players.filter(p => p.formationPlace > 0).sort((a, b) => a.formationPlace - b.formationPlace),
-      subs: players.filter(p => p.formationPlace === 0),
+      starters: players
+        .filter(p => p.starter)
+        .sort((a, b) => a.formationPlace - b.formationPlace),
+      subs: players.filter(p => !p.starter),
     }
   }
 

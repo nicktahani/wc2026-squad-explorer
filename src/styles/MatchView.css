@@ -77,97 +77,208 @@
   margin-right: 6px;
 }
 
-.match-view__ground {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+/* Lineups */
+
+.match-lineups {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
-/* Rosters */
+.match-lineups__heading {
+  text-align: center;
+}
 
-.match-view__rosters {
+.match-lineups__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px 40px;
+  align-items: start;
 }
 
-.roster__heading {
+.match-lineups__mobile {
+  display: none;
+}
+
+.lineup-team-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.lineup-group--right,
+.lineup-subs--right {
+  text-align: right;
+}
+
+.lineup-team__name {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1rem;
-  font-weight: 700;
-  padding-bottom: 12px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  min-height: 40px;
+  margin-bottom: 20px;
+  font-size: 1.35rem;
 }
 
-.roster__flag {
-  font-size: 1.3rem;
+.lineup-team__name--right {
+  justify-content: flex-end;
+}
+
+.lineup-team__flag {
+  font-size: 2rem;
   line-height: 1;
 }
 
-.roster__player-count {
-  margin-left: auto;
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
-.roster__empty {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.roster__club {
-  margin-bottom: 14px;
-}
-
-.roster__club-header {
+.lineup-group,
+.lineup-subs {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 5px;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
 }
 
-.roster__club-name {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+.lineup-pair {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  padding-top: 6px;
 }
 
-.roster__club-count {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+.lineup-pair--subs {
+  margin-top: 10px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
 }
 
-.roster__players {
+.lineup-group__title,
+.lineup-subs__title {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.lineup-group--right .lineup-group__title,
+.lineup-subs--right .lineup-subs__title {
+  text-align: right;
+}
+
+.lineup-group__players,
+.lineup-subs__players {
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: var(--shadow);
 }
 
-.roster__player {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 3px 0;
-  font-size: 0.85rem;
-  border-bottom: 1px solid transparent;
+.lineup-player {
+  display: grid;
+  grid-template-columns: 34px 28px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
 }
 
-.roster__pos {
-  font-size: 0.68rem;
-  font-weight: 700;
+.lineup-player:last-child {
+  border-bottom: 0;
+}
+
+.lineup-player--compact {
+  grid-template-columns: 30px 26px minmax(0, 1fr) auto;
+  min-height: 46px;
+  padding: 8px 12px;
+}
+
+.lineup-group--right .lineup-player,
+.lineup-subs--right .lineup-player {
+  grid-template-columns: minmax(0, 1fr) 28px 34px;
+}
+
+.lineup-subs--right .lineup-player--compact {
+  grid-template-columns: auto minmax(0, 1fr) 26px 30px;
+}
+
+.lineup-group--right .lineup-player__avatar,
+.lineup-subs--right .lineup-player__avatar {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.lineup-group--right .lineup-player__number,
+.lineup-subs--right .lineup-player__number {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.lineup-group--right .lineup-player__name,
+.lineup-subs--right .lineup-player__name {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.lineup-subs--right .lineup-player__position {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+}
+
+.lineup-subs--right .lineup-player--compact .lineup-player__name {
+  grid-column: 2;
+}
+
+.lineup-subs--right .lineup-player--compact .lineup-player__number {
+  grid-column: 3;
+}
+
+.lineup-subs--right .lineup-player--compact .lineup-player__avatar {
+  grid-column: 4;
+}
+
+.lineup-player__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lineup-player--compact .lineup-player__avatar {
+  width: 30px;
+  height: 30px;
+}
+
+.lineup-player__avatar {
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.62rem;
+  font-weight: 800;
   color: var(--text-muted);
-  width: 22px;
-  flex-shrink: 0;
-  text-transform: uppercase;
 }
 
-.roster__name {
+.lineup-player__number {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.lineup-player__name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--text);
+}
+
+.lineup-player__position {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 /* Responsive */
@@ -183,7 +294,41 @@
     justify-content: center;
   }
 
-  .match-view__rosters {
+  .match-lineups__grid {
+    display: none;
+  }
+
+  .match-lineups__mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .lineup-team-section + .lineup-team-section {
+    padding-top: 34px;
+    border-top: 1px solid var(--border);
+  }
+
+  .lineup-team__name {
+    margin-bottom: 0;
+  }
+
+  .lineup-team__name--right {
+    justify-content: flex-start;
+  }
+
+  .lineup-pair {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .lineup-pair--subs {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .lineup-subs {
+    margin-top: 4px;
   }
 }

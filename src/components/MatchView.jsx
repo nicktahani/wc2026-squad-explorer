@@ -2,16 +2,18 @@ import { useParams, Link } from 'react-router-dom'
 import '../styles/MatchView.css'
 import { formatDate } from '../utils/date'
 import { useMatchLineup } from '../data/useMatchLineup'
-import Pitch from './Pitch'
+import MatchLineup from './MatchLineup'
 
 export default function MatchView({ data }) {
   const { id } = useParams()
 
   const match = data.matches.find(m => m.id === id)
+  const { lineup, loading, available, error } = useMatchLineup(match)
+
   if (!match) return <p className="status">Match not found.</p>
 
   const ft = match.score?.ft
-  const { lineup, loading, available } = useMatchLineup(match)
+  const hasLineups = lineup?.home && lineup?.away
 
   return (
     <div className="match-view">
@@ -44,7 +46,22 @@ export default function MatchView({ data }) {
         </div>
       </header>
 
-      <Pitch />
+      <section className="match-lineups" aria-label="Starting lineups">
+        <div className="match-lineups__heading">
+          <h1>Starting Lineup</h1>
+          {loading && <span>Loading lineup…</span>}
+          {!loading && !available && <span>Lineup unavailable for this match.</span>}
+          {!loading && available && error && <span>Couldn't load lineup.</span>}
+        </div>
+
+        {!loading && lineup && !hasLineups && (
+          <p className="lineup-status">Lineup not available.</p>
+        )}
+
+        {!loading && hasLineups && (
+          <MatchLineup lineup={lineup} match={match} />
+        )}
+      </section>
     </div>
   )
 }
