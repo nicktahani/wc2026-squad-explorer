@@ -15,6 +15,8 @@ export default function MatchCard({ match }) {
     round 
   } = match
   const ft = score?.ft
+  const et = score?.et
+  const penalties = score?.p
 
   return (
     <Link to={`/match/${match.id}`} className="match-card">
@@ -24,7 +26,19 @@ export default function MatchCard({ match }) {
         </span>
         <div className="match-card__center">
           {ft ? (
-            <span className="match-card__score">{ft[0]}–{ft[1]}</span>
+            <>
+              <span className="match-card__score">
+                {ft[0]}–{ft[1]}
+                {et && !penalties && (
+                  <span className="match-card__score-note"> (ET)</span>
+                )}
+              </span>
+              {penalties && (
+                <span className="match-card__penalties">
+                  Pens {penalties[0]}–{penalties[1]}
+                </span>
+              )}
+            </>
           ) : (
             <span className="match-card__vs">vs</span>
           )}

@@ -13,6 +13,8 @@ export default function MatchView({ data }) {
   if (!match) return <p className="status">Match not found.</p>
 
   const ft = match.score?.ft
+  const et = match.score?.et
+  const penalties = match.score?.p
 
   return (
     <div className="match-view">
@@ -26,10 +28,28 @@ export default function MatchView({ data }) {
 
         <div className="match-view__center">
           {ft ? (
-            <span className="match-view__score">{ft[0]}–{ft[1]}</span>
+            <>
+              <span className="match-view__score">
+                {ft[0]}–{ft[1]}
+                {et && !penalties && <span className="match-view__score-note"> (ET)</span>}
+              </span>
+              {penalties && (
+                <span className="match-view__penalties">
+                  Pens {penalties[0]}–{penalties[1]}
+                </span>
+              )}
+            </>
           ) : (
             <span className="match-view__vs">vs</span>
           )}
+        </div>
+
+        <div className="match-view__team-block">
+          {match.team2Flag && <span className="match-view__flag">{match.team2Flag}</span>}
+          <span className="match-view__team-name">{match.team2 ?? match.team2Code}</span>
+        </div>
+
+        <div className="match-view__details">
           <div className="match-view__meta">
             {match.group && <span>{match.group}</span>}
             {match.round && <span>{match.round}</span>}
@@ -37,11 +57,6 @@ export default function MatchView({ data }) {
             {match.time && <span>{match.time}</span>}
           </div>
           {match.ground && <div className="match-view__ground">{match.ground}</div>}
-        </div>
-
-        <div className="match-view__team-block">
-          {match.team2Flag && <span className="match-view__flag">{match.team2Flag}</span>}
-          <span className="match-view__team-name">{match.team2 ?? match.team2Code}</span>
         </div>
       </header>
 
