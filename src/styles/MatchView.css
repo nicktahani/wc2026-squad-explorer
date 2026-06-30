@@ -151,13 +151,17 @@
 }
 
 .lineup-group__title,
-.lineup-subs__title {
+.lineup-subs-heading {
   font-size: 1rem;
   font-weight: 800;
 }
 
-.lineup-group--right .lineup-group__title,
-.lineup-subs--right .lineup-subs__title {
+.lineup-subs-heading {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.lineup-group--right .lineup-group__title {
   text-align: right;
 }
 
@@ -321,7 +325,4 @@
     border-top: 0;
   }
 
-  .lineup-subs {
-    margin-top: 4px;
-  }
 }

@@ -47,7 +47,7 @@ export default function MatchView({ data }) {
 
       <section className="match-lineups" aria-label="Starting lineups">
         <div className="match-lineups__heading">
-          <h1>Starting Lineup</h1>
+          <h2>Starting Lineup</h2>
           {status === 'loading' && <span>Loading lineup…</span>}
           {status === 'unavailable' && <span>Lineup unavailable for this match.</span>}
           {status === 'error' && <span>Couldn't load lineup.</span>}

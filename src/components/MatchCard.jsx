@@ -20,7 +20,7 @@ export default function MatchCard({ match }) {
   const ft = score?.ft
 
   return (
-    <Link to={`/match/${match.id}`} className={`match-card match-card--${status}`}>
+    <Link to={`/match/${match.id}`} className="match-card">
       <div className="match-card__row">
         <span className="match-card__team">
           {team1Code ? `${team1Flag} ${team1Code}` : team1}

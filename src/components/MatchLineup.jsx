@@ -77,7 +77,6 @@ function TeamGroup({ players = [], label, align = 'left' }) {
 function TeamSubs({ team, align = 'left' }) {
   return (
     <section className={`lineup-subs lineup-subs--${align}`}>
-      <h3 className="lineup-subs__title">Substitutes</h3>
       {team.subs?.length > 0 ? (
         <ul className="lineup-subs__players">
           {team.subs.map(player => (
@@ -117,6 +116,7 @@ export default function MatchLineup({ lineup, match }) {
         ))}
 
         <div className="lineup-pair lineup-pair--subs">
+          <h2 className="lineup-subs-heading">Substitutes</h2>
           <TeamSubs team={lineup.home} />
           <TeamSubs team={lineup.away} align="right" />
         </div>
@@ -132,6 +132,7 @@ export default function MatchLineup({ lineup, match }) {
               label={group.label}
             />
           ))}
+          <h2 className="lineup-subs-heading">Substitutes</h2>
           <TeamSubs team={lineup.home} />
         </section>
 
@@ -144,6 +145,7 @@ export default function MatchLineup({ lineup, match }) {
               label={group.label}
             />
           ))}
+          <h2 className="lineup-subs-heading">Substitutes</h2>
           <TeamSubs team={lineup.away} />
         </section>
       </div>
