@@ -16,7 +16,7 @@ export default function MatchView({ data }) {
 
   return (
     <div className="match-view">
-      <Link to="/" className="match-view__back">← All groups</Link>
+      <Link to="/" className="match-view__back">← All matches</Link>
 
       <header className="match-view__header">
         <div className="match-view__team-block">

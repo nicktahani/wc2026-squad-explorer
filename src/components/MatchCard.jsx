@@ -11,10 +11,7 @@ export default function MatchCard({ match }) {
     team1Flag, 
     team2Flag, 
     date, 
-    time, 
     score, 
-    status, 
-    ground, 
     round 
   } = match
   const ft = score?.ft

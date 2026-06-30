@@ -2,6 +2,7 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { useWorldCupData } from './data/useWorldCupData'
 import GroupStage from './components/GroupStage'
+import KnockoutStage from './components/KnockoutStage'
 import MatchView from './components/MatchView'
 
 export default function App() {
@@ -40,11 +41,14 @@ export default function App() {
             <Route
               path="/"
               element={
-                <GroupStage
-                  groups={data.groups}
-                  matches={data.matches}
-                  teamsByName={data.teamsByName}
-                />
+                <>
+                  <KnockoutStage matches={data.matches} />
+                  <GroupStage
+                    groups={data.groups}
+                    matches={data.matches}
+                    teamsByName={data.teamsByName}
+                  />
+                </>
               }
             />
             <Route path="/match/:id" element={<MatchView data={data} />} />

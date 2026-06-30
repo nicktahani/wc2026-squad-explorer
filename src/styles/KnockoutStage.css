@@ -1,0 +1,47 @@
+.knockout-stage {
+  margin-bottom: 32px;
+}
+
+.knockout-stage__header {
+  margin-bottom: 14px;
+}
+
+.knockout-stage__title {
+  color: var(--gold);
+  font-size: 1.25rem;
+}
+
+.knockout-stage__rounds {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.knockout-round {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.knockout-round__header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.knockout-round__title {
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.knockout-round__matches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+
+.knockout-round__matches .match-card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+}

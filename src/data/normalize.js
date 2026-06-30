@@ -14,7 +14,10 @@ function makeMatchId(match, index) {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '')
-  return `${match.date ?? 'tbd'}-${slug(match.team1)}-vs-${slug(match.team2)}-${index}`
+  const round = slug(match.round) || 'match'
+  const team1 = slug(match.team1) || 'tbd'
+  const team2 = slug(match.team2) || 'tbd'
+  return `${match.date ?? 'tbd'}-${round}-${team1}-vs-${team2}-${index}`
 }
 
 function matchStatus(match) {
@@ -55,24 +58,28 @@ export function normalizeWorldCup({ teams = [], groups = [], matches = [], squad
   }))
 
   const matchList = Array.isArray(matches) ? matches : matches.matches ?? []
-  const normalizedMatches = matchList.map((match, index) => ({
-    id: makeMatchId(match, index),
-    round: match.round,
-    date: match.date,
-    time: match.time,
-    group: match.group,
-    ground: match.ground,
-    team1: match.team1,
-    team2: match.team2,
-    team1Code: teamsByName.get(match.team1)?.fifaCode ?? null,
-    team2Code: teamsByName.get(match.team2)?.fifaCode ?? null,
-    team1Flag: teamsByName.get(match.team1)?.flag ?? null,
-    team2Flag: teamsByName.get(match.team2)?.flag ?? null,
-    score: match.score,
-    goals1: match.goals1 ?? [],
-    goals2: match.goals2 ?? [],
-    status: matchStatus(match),
-  }))
+  const normalizedMatches = matchList.map((match, index) => {
+    const stage = match.group ? 'group' : 'knockout'
+    return {
+      id: makeMatchId(match, index),
+      stage,
+      round: match.round,
+      date: match.date,
+      time: match.time,
+      group: match.group,
+      ground: match.ground,
+      team1: match.team1,
+      team2: match.team2,
+      team1Code: teamsByName.get(match.team1)?.fifaCode ?? null,
+      team2Code: teamsByName.get(match.team2)?.fifaCode ?? null,
+      team1Flag: teamsByName.get(match.team1)?.flag ?? null,
+      team2Flag: teamsByName.get(match.team2)?.flag ?? null,
+      score: match.score,
+      goals1: match.goals1 ?? [],
+      goals2: match.goals2 ?? [],
+      status: matchStatus(match),
+    }
+  })
 
   return {
     teams: normalizedTeams,
