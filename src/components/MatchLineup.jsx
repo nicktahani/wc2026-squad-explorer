@@ -26,6 +26,10 @@ function groupStarters(starters = []) {
   return grouped
 }
 
+function hasPlayers(team) {
+  return (team?.starters?.length ?? 0) > 0 || (team?.subs?.length ?? 0) > 0
+}
+
 function PlayerRow({ player, compact = false }) {
   return (
     <li className={`lineup-player${compact ? ' lineup-player--compact' : ''}`}>
@@ -58,43 +62,47 @@ function TeamHeader({ team, fallbackCode, flag }) {
 }
 
 function TeamGroup({ players = [], label, align = 'left' }) {
+  if (players.length === 0) return null
+
   return (
     <section className={`lineup-group lineup-group--${align}`}>
       <h3 className="lineup-group__title">{label}</h3>
-      {players.length > 0 ? (
-        <ul className="lineup-group__players">
-          {players.map(player => (
-            <PlayerRow key={`${player.jersey}-${player.name}`} player={player} />
-          ))}
-        </ul>
-      ) : (
-        <p className="lineup-status">No players listed.</p>
-      )}
+      <ul className="lineup-group__players">
+        {players.map(player => (
+          <PlayerRow key={`${player.jersey}-${player.name}`} player={player} />
+        ))}
+      </ul>
     </section>
   )
 }
 
 function TeamSubs({ team, align = 'left' }) {
+  if (!team.subs?.length) return null
+
   return (
     <section className={`lineup-subs lineup-subs--${align}`}>
-      {team.subs?.length > 0 ? (
-        <ul className="lineup-subs__players">
-          {team.subs.map(player => (
-            <PlayerRow
-              key={`${player.jersey}-${player.name}`}
-              player={player}
-              compact
-            />
-          ))}
-        </ul>
-      ) : (
-        <p className="lineup-status">No substitutes listed.</p>
-      )}
+      <ul className="lineup-subs__players">
+        {team.subs.map(player => (
+          <PlayerRow
+            key={`${player.jersey}-${player.name}`}
+            player={player}
+            compact
+          />
+        ))}
+      </ul>
     </section>
   )
 }
 
 export default function MatchLineup({ lineup, match }) {
+  if (!hasPlayers(lineup.home) && !hasPlayers(lineup.away)) {
+    return (
+      <div className="lineup-placeholder">
+        Lineup will appear here shortly before kickoff.
+      </div>
+    )
+  }
+
   const homeGroups = groupStarters(lineup.home.starters)
   const awayGroups = groupStarters(lineup.away.starters)
 
