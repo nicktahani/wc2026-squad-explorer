@@ -1,3 +1,28 @@
+import teamSupplemental from './teamSupplemental.json'
+
+// handles diacritics, ampersands, and other non-alphanumeric characters
+function normalizeNameKey(value) {
+  return String(value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, ' and ')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+}
+
+const supplementalByName = new Map(
+  Object.entries(teamSupplemental).map(([name, info]) => [normalizeNameKey(name), info])
+)
+
+function getSupplementalTeamInfo(team) {
+  return (
+    supplementalByName.get(normalizeNameKey(team.name)) ||
+    supplementalByName.get(normalizeNameKey(team.name_normalised)) ||
+    null
+  )
+}
+
 function normalizePlayer(raw) {
   return {
     number: raw.number,
@@ -37,10 +62,14 @@ export function normalizeWorldCup({ teams = [], groups = [], matches = [], squad
       squadByName.get(team.name_normalised) ||
       squadByName.get(team.fifa_code)
     const players = (squad?.players ?? []).map(normalizePlayer)
+    const supplemental = getSupplementalTeamInfo(team)
+
     return {
       name: team.name,
       displayName: team.name_normalised || team.name,
       fifaCode: team.fifa_code,
+      fifa_ranking: supplemental?.fifa_ranking ?? null,
+      star_player: supplemental?.star_player ?? null,
       group: team.group,
       confederation: team.confed,
       continent: team.continent,

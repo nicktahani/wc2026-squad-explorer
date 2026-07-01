@@ -5,6 +5,29 @@ import { getTeam } from '../data/normalize'
 import { useMatchLineup } from '../data/useMatchLineup'
 import MatchLineup from './MatchLineup'
 
+function TeamSupplement({ team, align = 'left' }) {
+  if (!team?.fifa_ranking && !team?.star_player) return null
+
+  return (
+    <section className={`match-view__team-supplement match-view__team-supplement--${align}`}>
+      <div className="match-view__team-supplement-body">
+        {team.fifa_ranking && (
+          <div className="match-view__ranking">
+            <span className="match-view__ranking-label">FIFA Ranking</span>
+            <span className="match-view__ranking-number">#{team.fifa_ranking}</span>
+          </div>
+        )}
+        {team.star_player && (
+          <div className="match-view__star-player">
+            <span className="match-view__star-player-label">Star Player</span>
+            <span className="match-view__star-player-name">{team.star_player}</span>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
 export default function MatchView({ data }) {
   const { id } = useParams()
 
@@ -63,9 +86,16 @@ export default function MatchView({ data }) {
         </div>
       </header>
 
+      {(homeTeam || awayTeam) && (
+        <div className="match-view__supplements" aria-label="Team notes">
+          <TeamSupplement team={homeTeam} />
+          <TeamSupplement team={awayTeam} align="right" />
+        </div>
+      )}
+
       <section className="match-lineups" aria-label="Starting lineups">
         <div className="match-lineups__heading">
-          <h2>Starting Lineup</h2>
+          <h2>Starting Lineups</h2>
           {status === 'loading' && <span>Loading lineup…</span>}
           {status === 'unavailable' && <span>Lineup unavailable for this match.</span>}
           {status === 'error' && <span>Couldn't load lineup.</span>}
