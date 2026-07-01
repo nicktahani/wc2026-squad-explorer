@@ -59,9 +59,6 @@ function PlayerRow({ player, compact = false }) {
         <span className="lineup-player__name">{player.name}</span>
         {player.club && <span className="lineup-player__club">{player.club}</span>}
       </span>
-      {compact && player.positionAbbr && (
-        <span className="lineup-player__position">{player.positionAbbr}</span>
-      )}
     </li>
   )
 }
@@ -119,7 +116,7 @@ export default function MatchLineup({ lineup, match, homeTeam, awayTeam }) {
   if (!hasPlayers(lineup.home) && !hasPlayers(lineup.away)) {
     return (
       <div className="lineup-placeholder">
-        Lineup will appear here shortly before kickoff.
+        Lineups will appear here shortly before kickoff.
       </div>
     )
   }
