@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import '../styles/MatchView.css'
 import { formatDate } from '../utils/date'
+import { getTeam } from '../data/normalize'
 import { useMatchLineup } from '../data/useMatchLineup'
 import MatchLineup from './MatchLineup'
 
@@ -15,6 +16,8 @@ export default function MatchView({ data }) {
   const ft = match.score?.ft
   const et = match.score?.et
   const penalties = match.score?.p
+  const homeTeam = getTeam(data, match.team1)
+  const awayTeam = getTeam(data, match.team2)
 
   return (
     <div className="match-view">
@@ -69,7 +72,12 @@ export default function MatchView({ data }) {
         </div>
 
         {status === 'ready' && (
-          <MatchLineup lineup={lineup} match={match} />
+          <MatchLineup
+            lineup={lineup}
+            match={match}
+            homeTeam={homeTeam}
+            awayTeam={awayTeam}
+          />
         )}
       </section>
     </div>

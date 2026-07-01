@@ -30,6 +30,24 @@ function hasPlayers(team) {
   return (team?.starters?.length ?? 0) > 0 || (team?.subs?.length ?? 0) > 0
 }
 
+function withSquadClubs(lineupTeam, squadTeam) {
+  if (!lineupTeam) return lineupTeam
+
+  const squadByNumber = new Map(
+    (squadTeam?.players ?? []).map(player => [String(player.number), player])
+  )
+  const addClub = player => ({
+    ...player,
+    club: squadByNumber.get(String(player.jersey))?.club ?? null,
+  })
+
+  return {
+    ...lineupTeam,
+    starters: lineupTeam.starters.map(addClub),
+    subs: lineupTeam.subs.map(addClub),
+  }
+}
+
 function PlayerRow({ player, compact = false }) {
   return (
     <li className={`lineup-player${compact ? ' lineup-player--compact' : ''}`}>
@@ -37,7 +55,10 @@ function PlayerRow({ player, compact = false }) {
         {player.positionAbbr || '•'}
       </span>
       <span className="lineup-player__number">{player.jersey || '-'}</span>
-      <span className="lineup-player__name">{player.name}</span>
+      <span className="lineup-player__identity">
+        <span className="lineup-player__name">{player.name}</span>
+        {player.club && <span className="lineup-player__club">{player.club}</span>}
+      </span>
       {compact && player.positionAbbr && (
         <span className="lineup-player__position">{player.positionAbbr}</span>
       )}
@@ -94,7 +115,7 @@ function TeamSubs({ team, align = 'left' }) {
   )
 }
 
-export default function MatchLineup({ lineup, match }) {
+export default function MatchLineup({ lineup, match, homeTeam, awayTeam }) {
   if (!hasPlayers(lineup.home) && !hasPlayers(lineup.away)) {
     return (
       <div className="lineup-placeholder">
@@ -103,15 +124,17 @@ export default function MatchLineup({ lineup, match }) {
     )
   }
 
-  const homeGroups = groupStarters(lineup.home.starters)
-  const awayGroups = groupStarters(lineup.away.starters)
+  const homeLineup = withSquadClubs(lineup.home, homeTeam)
+  const awayLineup = withSquadClubs(lineup.away, awayTeam)
+  const homeGroups = groupStarters(homeLineup.starters)
+  const awayGroups = groupStarters(awayLineup.starters)
 
   return (
     <>
       <div className="match-lineups__grid match-lineups__grid--desktop">
-        <TeamHeader team={lineup.home} fallbackCode={match.team1Code} flag={match.team1Flag} />
+        <TeamHeader team={homeLineup} fallbackCode={match.team1Code} flag={match.team1Flag} />
         <TeamHeader
-          team={lineup.away}
+          team={awayLineup}
           fallbackCode={match.team2Code}
           flag={match.team2Flag}
         />
@@ -125,14 +148,14 @@ export default function MatchLineup({ lineup, match }) {
 
         <div className="lineup-pair lineup-pair--subs">
           <h2 className="lineup-subs-heading">Substitutes</h2>
-          <TeamSubs team={lineup.home} />
-          <TeamSubs team={lineup.away} align="right" />
+          <TeamSubs team={homeLineup} />
+          <TeamSubs team={awayLineup} align="right" />
         </div>
       </div>
 
       <div className="match-lineups__mobile">
         <section className="lineup-team-section">
-          <TeamHeader team={lineup.home} fallbackCode={match.team1Code} flag={match.team1Flag} />
+          <TeamHeader team={homeLineup} fallbackCode={match.team1Code} flag={match.team1Flag} />
           {POSITION_GROUPS.map(group => (
             <TeamGroup
               key={group.key}
@@ -141,11 +164,11 @@ export default function MatchLineup({ lineup, match }) {
             />
           ))}
           <h2 className="lineup-subs-heading">Substitutes</h2>
-          <TeamSubs team={lineup.home} />
+          <TeamSubs team={homeLineup} />
         </section>
 
         <section className="lineup-team-section">
-          <TeamHeader team={lineup.away} fallbackCode={match.team2Code} flag={match.team2Flag} />
+          <TeamHeader team={awayLineup} fallbackCode={match.team2Code} flag={match.team2Flag} />
           {POSITION_GROUPS.map(group => (
             <TeamGroup
               key={group.key}
@@ -154,7 +177,7 @@ export default function MatchLineup({ lineup, match }) {
             />
           ))}
           <h2 className="lineup-subs-heading">Substitutes</h2>
-          <TeamSubs team={lineup.away} />
+          <TeamSubs team={awayLineup} />
         </section>
       </div>
     </>
