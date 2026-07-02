@@ -4,9 +4,9 @@ import MatchCard from './MatchCard'
 const ROUND_ORDER = [
   'Round of 32',
   'Round of 16',
-  'Quarterfinals',
-  'Semifinals',
-  'Third Place',
+  'Quarter-finals',
+  'Semi-finals',
+  'Match for third place',
   'Final',
 ]
 
