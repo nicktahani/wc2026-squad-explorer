@@ -28,7 +28,7 @@ export default function MatchCard({ match }) {
           {ft ? (
             <>
               <span className="match-card__score">
-                {ft[0]}–{ft[1]}
+                {et ? `${et[0]}-${et[1]}` : `${ft[0]}-${ft[1]}`}
                 {et && !penalties && (
                   <span className="match-card__score-note"> (ET)</span>
                 )}

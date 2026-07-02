@@ -56,7 +56,7 @@ export default function MatchView({ data }) {
           {ft ? (
             <>
               <span className="match-view__score">
-                {ft[0]}–{ft[1]}
+                {et ? `${et[0]}-${et[1]}` : `${ft[0]}-${ft[1]}`}
                 {et && !penalties && <span className="match-view__score-note"> (ET)</span>}
               </span>
               {penalties && (
