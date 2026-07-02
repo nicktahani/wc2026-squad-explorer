@@ -29,15 +29,17 @@
 html,
 body,
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
     radial-gradient(1200px 600px at 50% -10%, var(--pitch-700), transparent 60%),
     linear-gradient(180deg, var(--pitch-900), #07150d);
+  background-color: #07150d;
+  background-attachment: fixed;
 }
 
 h1,
