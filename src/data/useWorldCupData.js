@@ -6,6 +6,7 @@ export function useWorldCupData() {
   const query = useQuery({
     queryKey: ['worldcup', '2026'],
     queryFn: async ({ signal }) => normalizeWorldCup(await fetchAllRaw({ signal })),
+    gcTime: 1000 * 60 * 60 * 6,
   })
 
   return {
