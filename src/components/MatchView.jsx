@@ -31,8 +31,9 @@ function TeamSupplement({ team, align = 'left' }) {
   )
 }
 
-function formatGoalMinute(minute) {
-  return minute ? `${minute}'` : ''
+function formatGoalMinute(minute, isPenalty) {
+  if (!minute) return isPenalty ? '(P)' : ''
+  return `${minute}'${isPenalty ? ' (P)' : ''}`
 }
 
 function groupGoals(goals = []) {
@@ -43,7 +44,7 @@ function groupGoals(goals = []) {
     if (!name) continue
 
     const minutes = groupedGoals.get(name) ?? []
-    minutes.push(formatGoalMinute(goal.minute))
+    minutes.push(formatGoalMinute(goal.minute, goal.penalty))
     groupedGoals.set(name, minutes)
   }
 
