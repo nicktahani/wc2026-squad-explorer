@@ -47,6 +47,8 @@
 }
 
 .match-view__score {
+  position: relative;
+  display: inline-block;
   font-size: 2.8rem;
   font-weight: 800;
   color: var(--accent);
@@ -55,10 +57,14 @@
 }
 
 .match-view__score-note {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 0.28em);
+  transform: translateY(-50%);
   color: var(--text-muted);
   font-size: 0.85rem;
   letter-spacing: 0;
-  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .match-view__penalties {
@@ -67,6 +73,48 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.match-view__goals {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  width: clamp(260px, 48vw, 560px);
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.match-view__goal-list {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.match-view__goal-list--left {
+  text-align: right;
+}
+
+.match-view__goal-list--right {
+  text-align: left;
+}
+
+.match-view__goal-scorer {
+  overflow-wrap: anywhere;
+}
+
+.match-view__goal-name {
+  color: var(--text);
+}
+
+.match-view__goal-ball {
+  justify-self: center;
+  margin-top: 2px;
+  font-size: 0.85rem;
 }
 
 .match-view__vs {
@@ -448,6 +496,27 @@
 
   .match-view__team-block {
     justify-content: center;
+  }
+
+  .match-view__goals {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    width: min(100%, 360px);
+    gap: 4px;
+  }
+
+  .match-view__goal-list {
+    align-items: center;
+  }
+
+  .match-view__goal-list--left,
+  .match-view__goal-list--right {
+    text-align: center;
+  }
+
+  .match-view__goal-ball {
+    grid-row: 2;
+    margin: 1px 0;
   }
 
   .match-view__supplements {

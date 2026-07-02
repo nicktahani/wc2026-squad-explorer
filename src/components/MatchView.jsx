@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons'
+import { faCalendar, faClock, faFutbol } from '@fortawesome/free-regular-svg-icons'
 import { faMapPin } from '@fortawesome/free-solid-svg-icons'
 import '../styles/MatchView.css'
 import { formatDate } from '../utils/date'
@@ -31,6 +31,49 @@ function TeamSupplement({ team, align = 'left' }) {
   )
 }
 
+function formatGoalMinute(minute) {
+  return minute ? `${minute}'` : ''
+}
+
+function groupGoals(goals = []) {
+  const groupedGoals = new Map()
+
+  for (const goal of goals) {
+    const name = goal.name?.trim()
+    if (!name) continue
+
+    const minutes = groupedGoals.get(name) ?? []
+    minutes.push(formatGoalMinute(goal.minute))
+    groupedGoals.set(name, minutes)
+  }
+
+  return Array.from(groupedGoals, ([name, minutes]) => ({
+    name,
+    minutes: minutes.filter(Boolean),
+  }))
+}
+
+function GoalScorers({ goals, align }) {
+  const scorers = groupGoals(goals)
+
+  if (scorers.length === 0) {
+    return <div className={`match-view__goal-list match-view__goal-list--${align}`} aria-hidden="true" />
+  }
+
+  return (
+    <div className={`match-view__goal-list match-view__goal-list--${align}`}>
+      {scorers.map(scorer => (
+        <div className="match-view__goal-scorer" key={scorer.name}>
+          <span className="match-view__goal-name">{scorer.name}</span>
+          {scorer.minutes.length > 0 && (
+            <span className="match-view__goal-minutes"> {scorer.minutes.join(', ')}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function MatchView({ data }) {
   const { id } = useParams()
 
@@ -44,6 +87,7 @@ export default function MatchView({ data }) {
   const penalties = match.score?.p
   const homeTeam = getTeam(data, match.team1)
   const awayTeam = getTeam(data, match.team2)
+  const hasGoals = match.goals1.length > 0 || match.goals2.length > 0
 
   return (
     <div className="match-view">
@@ -66,6 +110,13 @@ export default function MatchView({ data }) {
                 <span className="match-view__penalties">
                   Pens {penalties[0]}–{penalties[1]}
                 </span>
+              )}
+              {hasGoals && (
+                <div className="match-view__goals" aria-label="Goals">
+                  <GoalScorers goals={match.goals1} align="left" />
+                  <FontAwesomeIcon className="match-view__goal-ball" icon={faFutbol} aria-hidden="true" />
+                  <GoalScorers goals={match.goals2} align="right" />
+                </div>
               )}
             </>
           ) : (
