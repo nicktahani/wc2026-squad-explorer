@@ -16,7 +16,7 @@ export default function App() {
           <div>
             <h1 className="app__title">World Cup 2026 Squad Explorer</h1>
             <p className="app__subtitle">
-              Click through matchups and size up each team by their players&apos; clubs
+              View how teams stack up head-to-head and assess their quality
             </p>
           </div>
         </div>
