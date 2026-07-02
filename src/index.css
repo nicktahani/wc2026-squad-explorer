@@ -55,6 +55,11 @@ a {
   text-decoration: none;
 }
 
+footer a {
+  text-decoration: underline;
+  margin-left: 2px;
+}
+
 button {
   font-family: inherit;
 }

@@ -57,7 +57,11 @@ export default function App() {
       </main>
 
       <footer className="app__footer">
-        <span>Data: openfootball (public domain)</span>
+        <span>Data:
+          <a href="https://github.com/openfootball/worldcup" target="_blank" rel="noopener noreferrer">
+            openfootball
+          </a>
+        </span>
       </footer>
     </div>
   )
