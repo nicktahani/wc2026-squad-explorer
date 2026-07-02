@@ -498,6 +498,18 @@
     justify-content: center;
   }
 
+  .match-view__flag {
+    font-size: 2rem;
+  }
+
+  .match-view__team-name {
+    font-size: 1.5rem;
+  }
+
+  .match-view__score {
+    font-size: 2.5rem;
+  }
+
   .match-view__goals {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -552,6 +564,10 @@
 
   .match-lineups__grid {
     display: none;
+  }
+
+  .match-view__ranking-number {
+    font-size: 2.5rem;
   }
 
   .match-lineups__mobile {
