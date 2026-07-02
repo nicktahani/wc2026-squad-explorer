@@ -1,4 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons'
+import { faMapPin } from '@fortawesome/free-solid-svg-icons'
 import '../styles/MatchView.css'
 import { formatDate } from '../utils/date'
 import { getTeam } from '../data/normalize'
@@ -79,10 +82,25 @@ export default function MatchView({ data }) {
           <div className="match-view__meta">
             {match.group && <span>{match.group}</span>}
             {match.round && <span>{match.round}</span>}
-            {match.date && <span>{formatDate(match.date)}</span>}
-            {match.time && <span>{match.time}</span>}
+            {match.date && (
+              <span className="match-view__detail-item">
+                <FontAwesomeIcon icon={faCalendar} aria-hidden="true" />
+                <span>{formatDate(match.date)}</span>
+              </span>
+            )}
+            {match.time && (
+              <span className="match-view__detail-item">
+                <FontAwesomeIcon icon={faClock} aria-hidden="true" />
+                <span>{match.time}</span>
+              </span>
+            )}
           </div>
-          {match.ground && <div className="match-view__ground">{match.ground}</div>}
+          {match.ground && (
+            <div className="match-view__ground match-view__detail-item">
+              <FontAwesomeIcon icon={faMapPin} aria-hidden="true" />
+              <span>{match.ground}</span>
+            </div>
+          )}
         </div>
       </header>
 
