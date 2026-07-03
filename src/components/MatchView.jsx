@@ -16,7 +16,10 @@ function TeamSupplement({ team, align = 'left' }) {
       <div className="match-view__team-supplement-body">
         {team.fifa_ranking && (
           <div className="match-view__ranking">
-            <span className="match-view__ranking-label">FIFA Ranking</span>
+            <span className="match-view__ranking-label">
+              {team.flag && <span className="match-view__ranking-flag" aria-hidden="true">{team.flag}</span>}
+              FIFA Ranking
+            </span>
             <span className="match-view__ranking-number">#{team.fifa_ranking}</span>
           </div>
         )}

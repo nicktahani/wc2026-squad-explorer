@@ -223,6 +223,17 @@
   text-transform: uppercase;
 }
 
+.match-view__ranking-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.match-view__ranking-flag {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
 .match-view__ranking-number {
   font-size: 3.5rem;
   font-weight: 900;
