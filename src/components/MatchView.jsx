@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendar, faClock, faFutbol } from '@fortawesome/free-regular-svg-icons'
 import { faMapPin } from '@fortawesome/free-solid-svg-icons'
 import '../styles/MatchView.css'
-import { formatDate } from '../utils/date'
+import { formatLocalMatchDateTime } from '../utils/date'
 import { getTeam } from '../data/normalize'
 import { useMatchLineup } from '../data/useMatchLineup'
 import MatchLineup from './MatchLineup'
@@ -95,6 +95,7 @@ export default function MatchView({ data }) {
   const homeTeam = getTeam(data, match.team1)
   const awayTeam = getTeam(data, match.team2)
   const hasGoals = match.goals1.length > 0 || match.goals2.length > 0
+  const matchDateTime = formatLocalMatchDateTime(match.date, match.time)
 
   return (
     <div className="match-view">
@@ -144,13 +145,13 @@ export default function MatchView({ data }) {
             {match.date && (
               <span className="match-view__detail-item">
                 <FontAwesomeIcon icon={faCalendar} aria-hidden="true" />
-                <span>{formatDate(match.date)}</span>
+                <span>{matchDateTime.date}</span>
               </span>
             )}
             {match.time && (
               <span className="match-view__detail-item">
                 <FontAwesomeIcon icon={faClock} aria-hidden="true" />
-                <span>{match.time}</span>
+                <span>{matchDateTime.time}</span>
               </span>
             )}
           </div>
