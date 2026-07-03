@@ -1,15 +1,28 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useWorldCupData } from './data/useWorldCupData'
 import GroupStage from './components/GroupStage'
 import KnockoutStage from './components/KnockoutStage'
 import MatchView from './components/MatchView'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 })
+  }, [pathname])
+
+  return null
+}
 
 export default function App() {
   const { data, loading, error, reload } = useWorldCupData()
 
   return (
     <div className="app">
+      <ScrollToTop />
+
       <header className="app__header">
         <div className="app__brand">
           <span className="app__logo" aria-hidden="true">⚽</span>
