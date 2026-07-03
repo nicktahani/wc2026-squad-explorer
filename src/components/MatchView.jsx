@@ -34,9 +34,12 @@ function TeamSupplement({ team, align = 'left' }) {
   )
 }
 
-function formatGoalMinute(minute, isPenalty) {
-  if (!minute) return isPenalty ? '(P)' : ''
-  return `${minute}'${isPenalty ? ' (P)' : ''}`
+function formatGoalMinute(minute, isPenalty, isOwnGoal) {
+  const marker = isOwnGoal ? 'OG' : isPenalty ? 'P' : ''
+  const markerText = marker ? ` (${marker})` : ''
+
+  if (!minute) return markerText.trim()
+  return `${minute}'${markerText}`
 }
 
 function groupGoals(goals = []) {
@@ -47,7 +50,7 @@ function groupGoals(goals = []) {
     if (!name) continue
 
     const minutes = groupedGoals.get(name) ?? []
-    minutes.push(formatGoalMinute(goal.minute, goal.penalty))
+    minutes.push(formatGoalMinute(goal.minute, goal.penalty, goal.owngoal))
     groupedGoals.set(name, minutes)
   }
 
