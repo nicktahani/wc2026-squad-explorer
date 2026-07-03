@@ -19,7 +19,7 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/wc2026-squad-explorer">
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
