@@ -20,6 +20,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      PAGES_DEPLOY_RETRY_DELAY_SECONDS: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -36,8 +38,13 @@ jobs:
       - id: deployment
         continue-on-error: true
         uses: actions/deploy-pages@v5
+      - name: Wait before retrying Pages deploy
+        if: steps.deployment.outcome == 'failure'
+        run: sleep "${PAGES_DEPLOY_RETRY_DELAY_SECONDS}"
       - id: deployment_retry
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
       - if: steps.deployment.outcome == 'failure' && steps.deployment_retry.outcome == 'failure'
-        run: exit 1
+        run: |
+          echo "::error::GitHub Pages deployment failed after two attempts."
+          exit 1
