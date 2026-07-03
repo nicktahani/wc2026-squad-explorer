@@ -76,12 +76,14 @@
 }
 
 .match-view__goals {
+  grid-column: 1 / -1;
+  justify-self: center;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
   align-items: start;
   gap: 10px;
   width: clamp(260px, 48vw, 560px);
-  margin-top: 2px;
+  margin-top: 0;
   color: var(--text-muted);
   font-size: 0.78rem;
   font-weight: 650;
@@ -500,46 +502,65 @@
 /* Responsive */
 
 @media (max-width: 700px) {
+  .match-view__back {
+    margin-bottom: 2.5em;
+  }
+
   .match-view__header {
-    grid-template-columns: 1fr;
+    gap: 20px;
     text-align: center;
   }
 
   .match-view__team-block {
     justify-content: center;
+    min-width: 0;
+    gap: 0.35em;
   }
 
   .match-view__flag {
-    font-size: 2rem;
+    font-size: 1.75em;
   }
 
   .match-view__team-name {
-    font-size: 1.5rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: 1.25em;
+    line-height: 1.08;
+  }
+
+  .match-view__center {
+    min-width: 0;
+    width: 100%;
+    gap: 6px;
   }
 
   .match-view__score {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 10vw, 2.5rem);
   }
 
   .match-view__goals {
-    grid-template-columns: 1fr;
-    justify-items: center;
     width: min(100%, 360px);
-    gap: 4px;
   }
 
   .match-view__goal-list {
-    align-items: center;
+    min-width: 0;
   }
 
-  .match-view__goal-list--left,
+  .match-view__goal-list--left {
+    text-align: right;
+  }
+
   .match-view__goal-list--right {
-    text-align: center;
+    text-align: left;
   }
 
   .match-view__goal-ball {
-    grid-row: 2;
-    margin: 1px 0;
+    margin-top: 1px;
+    font-size: 0.7rem;
+  }
+
+  .match-view__details {
+    margin-top: 2px;
   }
 
   .match-view__supplements {

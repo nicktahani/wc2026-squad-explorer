@@ -115,13 +115,6 @@ export default function MatchView({ data }) {
                   Pens {penalties[0]}–{penalties[1]}
                 </span>
               )}
-              {hasGoals && (
-                <div className="match-view__goals" aria-label="Goals">
-                  <GoalScorers goals={match.goals1} align="left" />
-                  <FontAwesomeIcon className="match-view__goal-ball" icon={faFutbol} aria-hidden="true" />
-                  <GoalScorers goals={match.goals2} align="right" />
-                </div>
-              )}
             </>
           ) : (
             <span className="match-view__vs">vs</span>
@@ -132,6 +125,14 @@ export default function MatchView({ data }) {
           {match.team2Flag && <span className="match-view__flag">{match.team2Flag}</span>}
           <span className="match-view__team-name">{match.team2 ?? match.team2Code}</span>
         </div>
+
+        {ft && hasGoals && (
+          <div className="match-view__goals" aria-label="Goals">
+            <GoalScorers goals={match.goals1} align="left" />
+            <FontAwesomeIcon className="match-view__goal-ball" icon={faFutbol} aria-hidden="true" />
+            <GoalScorers goals={match.goals2} align="right" />
+          </div>
+        )}
 
         <div className="match-view__details">
           <div className="match-view__meta">
