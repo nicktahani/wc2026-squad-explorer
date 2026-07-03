@@ -18,6 +18,7 @@ export async function fetchEspnEvents({ signal } = {}) {
       id: event.id,
       // ISO date string, slice to YYYY-MM-DD for matching
       date: event.date?.split("T")?.[0] ?? null,
+      kickoff: event.date ?? null,
       team1Abbr: home?.team?.abbreviation ?? null,
       team2Abbr: away?.team?.abbreviation ?? null,
     }
