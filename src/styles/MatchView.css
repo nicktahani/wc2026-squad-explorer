@@ -47,22 +47,25 @@
 }
 
 .match-view__score {
+  font-family: var(--font-score);
   position: relative;
   display: inline-block;
   font-size: 2.8rem;
-  font-weight: 800;
+  font-weight: 400;
   color: var(--accent);
   letter-spacing: 0.06em;
   line-height: 1;
 }
 
 .match-view__score-note {
+  font-family: var(--font);
   position: absolute;
   top: 50%;
   left: calc(100% + 0.28em);
   transform: translateY(-50%);
   color: var(--text-muted);
   font-size: 0.85rem;
+  font-weight: 700;
   letter-spacing: 0;
   white-space: nowrap;
 }
@@ -153,7 +156,7 @@
 .match-view__detail-item {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .match-view__ground {
@@ -507,7 +510,7 @@
   }
 
   .match-view__header {
-    gap: 20px;
+    gap: 25px;
     text-align: center;
   }
 
@@ -535,7 +538,7 @@
   }
 
   .match-view__score {
-    font-size: clamp(2rem, 10vw, 2.5rem);
+    font-size: 2rem;
   }
 
   .match-view__goals {
