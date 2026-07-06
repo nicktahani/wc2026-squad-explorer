@@ -36,6 +36,29 @@
   font-size: 0.95rem;
 }
 
+.app__home-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.app__round-button {
+  min-height: 38px;
+  padding: 0 14px;
+  background: var(--surface-raised);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.app__round-button:hover,
+.app__round-button:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .app__main {
   flex: 1;
   padding: 32px 0;

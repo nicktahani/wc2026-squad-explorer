@@ -1,4 +1,5 @@
 import '../styles/KnockoutStage.css'
+import { getRoundAnchorId } from '../data/currentRound'
 import MatchCard from './MatchCard'
 
 const ROUND_ORDER = [
@@ -46,7 +47,7 @@ export default function KnockoutStage({ matches }) {
           if (!round) return null
 
           return (
-            <section key={key} className="knockout-round">
+            <section key={key} id={getRoundAnchorId(key)} className="knockout-round">
               <header className="knockout-round__header">
                 <h3 className="knockout-round__title">{round.title}</h3>
               </header>
