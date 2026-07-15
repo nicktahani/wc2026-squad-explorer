@@ -567,13 +567,12 @@
   }
 
   .match-view__supplements {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
   }
 
-  .match-view__team-supplement,
-  .match-view__team-supplement--right {
-    text-align: left;
+  .match-view__team-supplement {
+    padding: 10px 12px;
   }
 
   .match-view__team-supplement-body,
@@ -588,21 +587,16 @@
     grid-row: auto;
   }
 
-  .match-view__team-supplement--right .match-view__ranking {
-    align-items: flex-start;
-  }
-
-  .match-view__team-supplement--right .match-view__star-player {
-    border-right: 0;
-    border-left: 3px solid var(--gold);
-  }
-
   .match-lineups__grid {
     display: none;
   }
 
   .match-view__ranking-number {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
+  }
+
+  .match-view__star-player-name {
+    font-size: 1rem;
   }
 
   .match-lineups__mobile {
