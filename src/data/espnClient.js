@@ -5,7 +5,7 @@ const SCOREBOARD_DATES = '20260611-20260719'
 // returns all events (matches) for the tournament as a flat array
 // used for ID lookup when matching openfootball matches to ESPN events
 export async function fetchEspnEvents({ signal } = {}) {
-  const url = `${BASE_URL}/scoreboard?dates=${SCOREBOARD_DATES}`
+  const url = `${BASE_URL}/scoreboard?dates=${SCOREBOARD_DATES}&limit=105`
   const res = await fetch(url, { signal })
   if (!res.ok) throw new Error(`Scoreboard fetch failed (HTTP ${res.status})`)
   const data = await res.json()
